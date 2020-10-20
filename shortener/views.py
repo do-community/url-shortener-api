@@ -37,7 +37,10 @@ class index(APIView):
 
 class RedirectViewset(viewsets.ModelViewSet):
     queryset = URLRedirect.objects.all()
-    permission_classes = [permissions.IsAuthenticated]
+
+    if os.getenv("ALLOW_OPEN_ACCESS", "False") != "True":
+        permission_classes = [permissions.IsAuthenticated]
+
     serializer_class = URLRedirectSerializer
 
 
