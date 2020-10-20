@@ -1,20 +1,16 @@
-from django.http import HttpResponse
 from django.shortcuts import redirect, get_object_or_404
 from rest_framework.views import APIView
+from rest_framework import generics
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
 from rest_framework import permissions
-from rest_framework.generics import RetrieveUpdateDestroyAPIView
-from django.contrib.auth import get_user_model
 from rest_framework import viewsets
 from .serializers import URLRedirectSerializer, UserSerializer
-from django.forms.models import model_to_dict
 from .models import URLRedirect
 from django.contrib.auth.models import User
 import os
 
 
-class index(APIView):
+class index(generics.GenericAPIView):
     def get(self, request):
         if os.getenv("REDIRECT", "True") == "False":
             short_link = request.path.lstrip("/")
