@@ -7,14 +7,20 @@ from rest_framework import viewsets
 from .serializers import URLRedirectSerializer, UserSerializer
 from .models import URLRedirect
 from django.contrib.auth.models import User
+from django.conf import settings
 import os
+import re
 
 
-class index(generics.GenericAPIView):
+class index(APIView):
     def get(self, request):
+        if hasattr(settings, "FORCE_SCRIPT_PATH"):
+            regex_str = "^\/{0}\/?".format(settings.FORCE_SCRIPT_PATH)
+        else:
+            regex_str = "/"
+        short_link = re.sub(regex_str, "", request.path)
+
         if os.getenv("REDIRECT", "True") == "False":
-            short_link = request.path.lstrip("/")
-            print(short_link)
             redir = get_object_or_404(URLRedirect, short_link=short_link)
             redir.visit_count = redir.visit_count + 1
             redir.save()
