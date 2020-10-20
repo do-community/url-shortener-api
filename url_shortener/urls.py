@@ -17,17 +17,18 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.authtoken import views as authviews
 from .api import router
-from drf_spectacular.views import SpectacularSwaggerView
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
     path("login", authviews.obtain_auth_token, name="obtain-auth-token"),
     path("manage/", include(router.urls)),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "docs/",
         SpectacularSwaggerView.as_view(url_name="schema"),
-        name="swagger-ui",
+        name="docs",
     ),
     path("", include("shortener.urls")),
 ]
