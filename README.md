@@ -145,7 +145,7 @@ Update an URL Redirect.
 }
 ```
 
-### DELETE `/feeds/<str:short_link>` - **Auth Required**
+### DELETE `/manage/<str:short_link>` - **Auth Required**
 Delete an URL Redirect.
 
 *URI Parameters*

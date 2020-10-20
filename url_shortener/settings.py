@@ -20,9 +20,9 @@ from django.core.management.utils import get_random_secret_key
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-app_route = os.getenv("APP_PLAT_ROUTE", None);
+app_route = os.getenv("APP_PLAT_ROUTE", None)
 if app_route is not None:
-    FORCE_SCRIPT_NAME = "/{0}".format(os.path.relpath(app_route, '/'))
+    FORCE_SCRIPT_NAME = "/{0}".format(os.path.relpath(app_route, "/"))
 
 
 # Quick-start development settings - unsuitable for production
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
+    "drf_spectacular",
 ]
 
 REST_FRAMEWORK = {
@@ -57,6 +58,7 @@ REST_FRAMEWORK = {
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
     ],
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
 }
 
 
@@ -170,4 +172,5 @@ CORS_ORIGIN_WHITELIST = [
     "https://127.0.0.1:3000",
     "https://127.0.0.1:8000",
     "https://localhost:3000",
-    "https://localhost:8000",]
+    "https://localhost:8000",
+]
