@@ -35,10 +35,23 @@ class index(APIView):
             return redirect(redir.url)
 
 
+class IsCreationOrIsAuthenticated(permissions.BasePermission):
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            if view.action == "create":
+                return True
+            else:
+                return False
+        else:
+            return True
+
+
 class RedirectViewset(viewsets.ModelViewSet):
     queryset = URLRedirect.objects.all()
 
-    if os.getenv("ALLOW_OPEN_ACCESS", "False") != "True":
+    if os.getenv("ALLOW_OPEN_ACCESS", "False") == "True":
+        permission_classes = [IsCreationOrIsAuthenticated]
+    else:
         permission_classes = [permissions.IsAuthenticated]
 
     serializer_class = URLRedirectSerializer
