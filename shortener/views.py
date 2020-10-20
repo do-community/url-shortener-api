@@ -14,13 +14,11 @@ import re
 
 class index(APIView):
     def get(self, request):
-        if hasattr(settings, "FORCE_SCRIPT_PATH"):
-            regex_str = "^\/{0}\/?".format(settings.FORCE_SCRIPT_PATH)
+        if hasattr(settings, "FORCE_SCRIPT_NAME") is True:
+            regex_str = "^\/{0}\/?".format(settings.FORCE_SCRIPT_NAME)
         else:
             regex_str = "/"
         short_link = re.sub(regex_str, "", request.path)
-
-        print(short_link)
 
         if os.getenv("REDIRECT", "True") == "False":
             redir = get_object_or_404(URLRedirect, short_link=short_link)
