@@ -15,7 +15,7 @@ import re
 class index(APIView):
     def get(self, request):
         if hasattr(settings, "FORCE_SCRIPT_NAME") is True:
-            regex_str = "^\/{0}\/?".format(settings.FORCE_SCRIPT_NAME)
+            regex_str = "^\/{0}\/?".format(settings.FORCE_SCRIPT_NAME.lstrip("/"))
         else:
             regex_str = "/"
         short_link = re.sub(regex_str, "", request.path)
