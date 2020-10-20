@@ -14,7 +14,10 @@ class index(generics.GenericAPIView):
     def get(self, request):
         if os.getenv("REDIRECT", "True") == "False":
             short_link = request.path.lstrip("/")
+            print(short_link)
             redir = get_object_or_404(URLRedirect, short_link=short_link)
+            redir.visit_count = redir.visit_count + 1
+            redir.save()
             return Response({"redirect": redir.url})
         else:
             short_link = request.path.lstrip("/")
