@@ -9,7 +9,22 @@ with the location of where the redirect is set.
 
 Default is set to `True`.
 
+## How to Deploy to DigitalOcean's App Platform
+
+* This app will need a database, so either stand up your own or use an App Platform dev db.
+* The run command should be `gunicorn --worker-tmp-dir /dev/shm url_shortener.wsgi`
+* Env Vars
+    * `DJANGO_ALLOWED_HOSTS` - Set this to your custom domain or `${APP_DOMAIN}` to get the default app domain from DigitalOcean
+    * `DATABASE_URL` -  The database connection URL. If using App Platform dev db set to `${<NAME_OF_DB>.DATABASE_URL}` where `<NAME_OF_DB>` is the name you specify for the db at creation
+    * `REDIRECT` - Set to `False` if you want the API to return where the redirect is pointed instead of actually performing the redirect
+    * `APP_PLAT_ROUTE` - If you run this app under a subfolder, ex: my.api.example/api then you'll need to specify what subfolder it's running under. Format should be `/route` with a leading an no trailing slash
+    * `ALLOW_OPEN_ACCESS` - Set to `True` if you want to allow open access to the POST method to add redirects. 
+* Once deployed access the console and run `python manage.py migrate` to perform the initial migrations
+* After performing the initial migrations run `python manage.py createsuperuser` in the console and follow the prompt to create a super user
+
 ## API Spec
+A full Open API Spec can be found at `/docs/` in Swagger format.
+
 All examples are using [`httpie`](https://httpie.org/). If you haven't checked 
 it out you should.
 
