@@ -13,6 +13,7 @@ class URLRedirectSerializer(serializers.ModelSerializer):
             "id",
             "short_link",
             "url",
+            "visit_count",
         ]
 
 
