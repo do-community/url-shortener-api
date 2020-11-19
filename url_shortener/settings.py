@@ -174,3 +174,18 @@ CORS_ORIGIN_WHITELIST = [
     "https://localhost:3000",
     "https://localhost:8000",
 ]
+
+API_DESCRIPTION = """
+API for the URL Shortener. 
+
+<h4>If you're viewing this at a route url, such as myapi.com/api be sure to
+include the route in your api call.</h4> <br>
+Example: If you found this documentation at <em><strong>myapi.com/api/docs/</strong></em> then the API call
+should be at <em><strong>myapi.com/api/manage/redirects/</strong></em>
+"""
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'URL Shortener API',
+    'DESCRIPTION': API_DESCRIPTION,
+    'VERSION': '0.0.1',
+}
