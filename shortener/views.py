@@ -14,7 +14,7 @@ import re
 
 class index(APIView):
     def get(self, request):
-        if hasattr(settings, "FORCE_SCRIPT_NAME") is True:
+        if settings.FORCE_SCRIPT_NAME:
             regex_str = "^\/{0}\/?".format(settings.FORCE_SCRIPT_NAME.lstrip("/"))
         else:
             regex_str = "/"
